@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  nginx:
+    container_name: ${APP_NAME}_${DOCKER_APP_NAME}_nginx
+    image: nginx
+    tty: true
+    ports:
+      - ${DOCKER_APP_PORT}:80
+    volumes:
+      - ./php:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - rentnet
+
+  php:
+    container_name: ${APP_NAME}_${DOCKER_APP_NAME}_php
+    build:
+      context: .
+      dockerfile: docker/php/php-fpm/Dockerfile
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - ./php:/var/www
+      - ./docker/php/php-fpm/php.ini:/usr/local/etc/php/php.ini
+    environment:
+      PHP_IDE_CONFIG: "serverName=PhpServerDocker"
+    networks:
+      - rentnet
+
+networks:
+  rentnet:
+    external: true

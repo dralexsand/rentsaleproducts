@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  adminer:
+    image: adminer
+    container_name: ${APP_NAME}_${DOCKER_APP_NAME}_adminer
+    restart: unless-stopped
+    ports:
+      - ${DOCKER_ADMINER_PORT}:8080
+    environment:
+      ADMINER_DESIGN: hever
+    networks:
+      - rentnet
+
+networks:
+  rentnet:
+    external: true
