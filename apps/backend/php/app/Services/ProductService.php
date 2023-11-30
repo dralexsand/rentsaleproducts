@@ -38,4 +38,20 @@ class ProductService implements ServiceGetDataInterface
 
         return $result;
     }
+
+    public function getByCode(string $code): array
+    {
+        try {
+            $result['data'] = Product::query()
+                ->where('code', '=', $code)
+                ->first();
+        } catch (Exception $e) {
+            $result = [
+                'status' => 500,
+                'error' => $e->getMessage()
+            ];
+        }
+
+        return $result;
+    }
 }

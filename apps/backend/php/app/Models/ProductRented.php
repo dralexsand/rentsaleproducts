@@ -30,7 +30,6 @@ class ProductRented extends Model
         $h = $hours->period;
 
 
-
         return date('Y-m-d H:i:s', strtotime($rentedStart." + $hours hours"));
     }
 

@@ -7,7 +7,6 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Models\ProductRented;
-use App\Models\RentalPeriod;
 use App\Models\RentUser;
 use Exception;
 
@@ -40,7 +39,6 @@ class RentStoreService implements ServiceStoreInterface
             $rent->save();
 
             $product->update(['status_id' => 3]);
-            // id, product_code, rented_end
 
             ProductRented::query()->insert([
                 'product_code' => $rent->product->code,
