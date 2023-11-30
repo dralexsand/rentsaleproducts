@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\RentalPeriodResource;
 use App\Services\RentalPeriodService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class RentalPeriodController extends Controller
 {
@@ -18,7 +19,11 @@ class RentalPeriodController extends Controller
      */
     public function index()
     {
-        $response = $this->rentalPeriodService->getAll();
+        $response = Cache::get('rental_periods');
+
+        if ($response === null) {
+            $response = $this->rentalPeriodService->getAll();
+        }
 
         return isset($response['error'])
             ? response($response['error'], $response['status'])
@@ -35,29 +40,5 @@ class RentalPeriodController extends Controller
         return isset($response['error'])
             ? response($response['error'], $response['status'])
             : new RentalPeriodResource($response['data']);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

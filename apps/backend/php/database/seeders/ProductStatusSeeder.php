@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\ProductStatus;
 use App\Traits\SeederDataTrait;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 
 class ProductStatusSeeder extends Seeder
 {
@@ -18,5 +19,7 @@ class ProductStatusSeeder extends Seeder
         $listStatuses = $this->listStatuses();
 
         ProductStatus::query()->insert($listStatuses);
+
+        Cache::forever('product_statuses', ['data' => ProductStatus::query()->get()]);
     }
 }
