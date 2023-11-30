@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AuthController;
-use App\Http\Controllers\Api\v1\FilterController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProductStatusController;
 use App\Http\Controllers\Api\v1\RentalPeriodController;
@@ -42,7 +41,5 @@ Route::name('api.')->group(function () {
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('sale', [SaleController::class, 'store'])->name('sale.store');
         Route::post('rent', [RentController::class, 'store'])->name('rent.store');
-
-        Route::get('filters', FilterController::class)->name('filter');
     });
 });

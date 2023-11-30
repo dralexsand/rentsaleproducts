@@ -23,12 +23,10 @@ class ProductRented extends Model
 
     public function getRentedEndDate(string $rentedStart, int $rentalPeriodId): string
     {
-        $hours = ProductRented::query()
-            ->find($rentalPeriodId)
-            ->first();
-
-        $h = $hours->period;
-
+        $hours = RentalPeriod::query()
+            ->where('id', '=', $rentalPeriodId)
+            ->first()
+            ->period;
 
         return date('Y-m-d H:i:s', strtotime($rentedStart." + $hours hours"));
     }
@@ -40,7 +38,7 @@ class ProductRented extends Model
             ->first()
             ->rental_cost_per_hour;
 
-        $hours = ProductRented::query()
+        $hours = RentalPeriod::query()
             ->where(['id' => $rentalPeriodId])
             ->first()
             ->period;

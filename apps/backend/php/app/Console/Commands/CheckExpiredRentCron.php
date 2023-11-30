@@ -19,7 +19,7 @@ class CheckExpiredRentCron extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Check rent period expired every five minutes';
 
     /**
      * Execute the console command.
